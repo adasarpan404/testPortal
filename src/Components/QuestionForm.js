@@ -87,7 +87,7 @@ function QuestionForm({ data, number, increaseNumber }) {
       </h5>
       <select
         multiple
-        className="form-control list-group"
+        className="form-control list-group mt-3"
         id="exampleFormControlSelect"
         onChange={onSelect}
         required
@@ -102,7 +102,7 @@ function QuestionForm({ data, number, increaseNumber }) {
           );
         })}
       </select>
-      <button type="submit" className="btn btn-outline-primary" style={{ width: "18rem", alignSelf: "center" }}>
+      <button type="submit" className="btn btn-outline-primary mt-4" style={{ width: "18rem", alignSelf: "center" }}>
         Submit Answer
       </button>
     </form>
