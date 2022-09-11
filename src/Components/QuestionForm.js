@@ -3,13 +3,15 @@ import React, { useState } from "react";
 function QuestionForm({ data, number, increaseNumber }) {
   const [selectOption, setSelectOption] = useState("");
   const onSelect = (e) => {
-    setSelectOption(e.target.value);
+    setSelectOption(e.target.value?e.target.value: "wrong");
   };
   function handleSubmit(e) {
     e.preventDefault();
     let correctAnswer;
     if (data.answer === selectOption) {
       correctAnswer = true;
+    }else{
+        correctAnswer=false
     }
     
     increaseNumber(correctAnswer);
@@ -25,6 +27,7 @@ function QuestionForm({ data, number, increaseNumber }) {
         className="form-control list-group list-group-flush"
         id="exampleFormControlSelect2"
         onChange={onSelect}
+        required
       >
         {data.option.map((i) => {
           return (
