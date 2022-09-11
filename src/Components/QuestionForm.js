@@ -74,16 +74,25 @@ function QuestionForm({ data, number, increaseNumber }) {
 
   return (
     <form className="form-group card" onSubmit={handleSubmit}>
-      <h2>{timer}</h2>
-      <h5 className="card-title">
+      <div className="card" style={{ width: "18rem", alignSelf: "center" }}>
+        <div className="card-body">
+          <h3 className="card-title">{timer}</h3>
+          <p class="card-text mt-3">Time is precious</p>
+
+        </div>
+      </div>
+
+      <h5 className="card-title mt-5">
         {number + 1}. {data.question}
       </h5>
       <select
         multiple
-        className="form-control list-group list-group-flush"
-        id="exampleFormControlSelect2"
+        className="form-control list-group"
+        id="exampleFormControlSelect"
         onChange={onSelect}
         required
+        style={{ width: "40rem", alignSelf: "center" }}
+        
       >
         {data.option.map((i) => {
           return (
@@ -93,7 +102,7 @@ function QuestionForm({ data, number, increaseNumber }) {
           );
         })}
       </select>
-      <button type="submit" className="btn btn-outline-primary">
+      <button type="submit" className="btn btn-outline-primary" style={{ width: "18rem", alignSelf: "center" }}>
         Submit Answer
       </button>
     </form>
