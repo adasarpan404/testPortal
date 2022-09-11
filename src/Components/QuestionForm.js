@@ -1,24 +1,80 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 function QuestionForm({ data, number, increaseNumber }) {
+  const Ref = useRef(null);
   const [selectOption, setSelectOption] = useState("");
+  const [timer, setTimer] = useState("00:01:00");
   const onSelect = (e) => {
-    setSelectOption(e.target.value?e.target.value: "wrong");
+    setSelectOption(e.target.value ? e.target.value : "wrong");
   };
   function handleSubmit(e) {
     e.preventDefault();
     let correctAnswer;
     if (data.answer === selectOption) {
       correctAnswer = true;
-    }else{
-        correctAnswer=false
+    } else {
+      correctAnswer = false;
     }
-    
+
     increaseNumber(correctAnswer);
+    clearTimer(getDeadTime());
   }
+
+  const getTimeRemaining = (e) => {
+    const total = Date.parse(e) - Date.parse(new Date());
+    const seconds = Math.floor((total / 1000) % 60);
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    const hours = Math.floor((total / 1000 / 60 / 60) % 24);
+    return {
+      total,
+      hours,
+      minutes,
+      seconds,
+    };
+  };
+
+  const startTimer = (e) => {
+    let { total, hours, minutes, seconds } = getTimeRemaining(e);
+    if (total >= 0) {
+      setTimer(
+        (hours > 9 ? hours : "0" + hours) +
+          ":" +
+          (minutes > 9 ? minutes : "0" + minutes) +
+          ":" +
+          (seconds > 9 ? seconds : "0" + seconds)
+      );
+    }
+  };
+
+  const clearTimer = (e) => {
+    setTimer("00:01:00");
+    if (Ref.current) clearInterval(Ref.current);
+    const id = setInterval(() => {
+      startTimer(e);
+    }, 1000);
+    Ref.current = id;
+  };
+  const getDeadTime = () => {
+    let deadline = new Date();
+
+    deadline.setSeconds(deadline.getSeconds() + 60);
+    return deadline;
+  };
+
+  useEffect(() => {
+    clearTimer(getDeadTime());
+  }, []);
+
+  useEffect(() => {
+    if (timer === "00:00:00") {
+      increaseNumber(false);
+      clearTimer(getDeadTime());
+    }
+  }, [timer]);
 
   return (
     <form className="form-group card" onSubmit={handleSubmit}>
+      <h2>{timer}</h2>
       <h5 className="card-title">
         {number + 1}. {data.question}
       </h5>

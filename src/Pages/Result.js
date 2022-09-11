@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 
 function Result() {
   const location = useLocation();
-  console.log(location.state);
+
   return (
     <div className="card">
       <div className="card-header">Score</div>
