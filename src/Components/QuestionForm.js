@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 function QuestionForm({ data, number, increaseNumber }) {
   const Ref = useRef(null);
   const [selectOption, setSelectOption] = useState("");
-  const [timer, setTimer] = useState("00:01:00");
+  const [timer, setTimer] = useState("??:??:??");
   const onSelect = (e) => {
     setSelectOption(e.target.value ? e.target.value : "wrong");
   };
@@ -47,7 +47,7 @@ function QuestionForm({ data, number, increaseNumber }) {
   };
 
   const clearTimer = (e) => {
-    setTimer("00:01:00");
+    setTimer("timer started");
     if (Ref.current) clearInterval(Ref.current);
     const id = setInterval(() => {
       startTimer(e);
@@ -57,7 +57,7 @@ function QuestionForm({ data, number, increaseNumber }) {
   const getDeadTime = () => {
     let deadline = new Date();
 
-    deadline.setSeconds(deadline.getSeconds() + 60);
+    deadline.setSeconds(deadline.getSeconds() + data.time+1);
     return deadline;
   };
 
